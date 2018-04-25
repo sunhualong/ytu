@@ -1,0 +1,16 @@
+.settings
+target
+.project
+.classpath
+.tern-project
+.myumldata
+/target/
+*/.project
+*/.classpath
+*/target/
+*/.tern-project
+*/.myumldata
+/bin/
+.idea/
+*.iml
+/bin/

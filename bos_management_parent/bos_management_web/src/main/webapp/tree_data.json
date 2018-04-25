@@ -1,0 +1,24 @@
+[{
+	"id":1,
+	"text":"基础数据",
+	"children":[{
+		"text":"基础档案设置",
+		"attributes":{
+			"url":"pages/base/archives.html"
+		}
+	},{
+		"text":"收派标准",
+		"attributes":{
+			"url":"pages/base/standard.html"
+		}
+	}]
+},{
+	"id":2,
+	"text":"受理",
+	"children":[{
+		"text":"业务受理",
+		"attributes":{
+			"url":"pages/take_delivery/order.html"
+		}
+	}]
+}]

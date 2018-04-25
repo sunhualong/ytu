@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<link rel="stylesheet" type="text/css" href="plugins/city-picker.css">
+	<script src="plugins/jquery.min.js" type="text/javascript"></script>
+	<script src="plugins/city-picker.data.js" type="text/javascript"></script>
+	<script src="plugins/city-picker.js" type="text/javascript"></script>
+</head>
+<body>
+<div style="position: relative;"><!-- container --> 
+  <input readonly type="text" data-toggle="city-picker">
+</div>
+<hr/>
+<div style="position: relative;"><!-- container -->
+  <input readonly type="text" data-toggle="city-picker" placeholder="请选择省/市" data-level="city" >
+</div>
+<hr/>
+<div style="position: relative;"><!-- container -->
+  <input readonly type="text" data-toggle="city-picker" data-simple="true" >
+</div>
+<hr>
+<hr/>
+<div style="position: relative;"><!-- container -->
+  <input id="city-picker1" readonly type="text">
+</div>
+<input type="button" id="init" value="init" />
+<input type="button" id="reset" value="reset" />
+<input type="button" id="destory" value="destory" />
+<script type="text/javascript">
+	$(function(){
+		$("#city-picker1").citypicker();
+		$("#init").click(Init);
+		$("#reset").click(Reset);
+		$("#destory").click(Destory);
+	})
+	function Init(){
+		$("#city-picker1").citypicker({
+			province:"北京市",
+			city:"北京市",
+			district:"顺义区"
+		});
+	}
+	function Reset(){
+		$("#city-picker1").citypicker("reset");
+	}
+	function Destory(){
+		$("#city-picker1").citypicker("destroy");
+	}
+</script>
+</body>
+</html>

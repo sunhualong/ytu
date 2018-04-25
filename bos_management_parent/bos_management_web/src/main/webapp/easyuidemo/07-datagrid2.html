@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css"
+	href="../js/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+	href="../js/easyui/themes/icon.css">
+<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="../js/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="../js/easyui/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body>
+	<table id="dg"></table>
+	<script type="text/javascript">
+		$(function(){
+			var rowIdx;
+			$("#dg").datagrid({
+				url:'../data/datagrid.json',
+				columns:[[
+				          {field:'id',title:'编号',width:100,checkbox:true},
+				          {field:'name',title:'姓名',width:100,editor:{
+				        	  type:'validatebox',
+				        	  options:{}
+				          }},
+				          {field:'age',title:'年龄',width:100,editor:{
+				        	  type:'numberbox',
+				        	  options:{}
+				          }},
+				          {field:'birthday',title:'生日',width:100,editor:{
+				        	  type:'datebox',
+				        	  options:{},
+				          }}
+				          ]],
+				striped : true,
+				toolbar: [{
+					text:'编辑',
+					iconCls: 'icon-edit',
+					handler: function(){
+						if(rowIdx==undefined){
+							var rows = $("#dg").datagrid("getSelections");
+							if(rows.length==1){
+								rowIdx = $("#dg").datagrid("getRowIndex",rows[0]);
+								$("#dg").datagrid("beginEdit",rowIdx);
+							}else{
+								$.messager.alert("警告","请选择一行数据进行操作!","warning");
+							}
+						}else{
+							$.messager.alert("警告","请完成当前操作","warning");
+						}
+						
+					}
+				},{
+					text:'保存',
+					iconCls: 'icon-save',
+					handler: function(){
+						$("#dg").datagrid("endEdit",rowIdx);
+						var rows = $("#dg").datagrid("getRows");
+						if(rows[rowIdx].name==""){
+							$("#dg").datagrid("deleteRow",rowIdx);
+						}
+						rowIdx=undefined;
+					}
+				},{
+					text:'取消',
+					iconCls: 'icon-cancel',
+					handler: function(){
+						$("#dg").datagrid("cancelEdit",rowIdx);
+						var rows = $("#dg").datagrid("getRows");
+						if(rows[rowIdx].name==undefined){
+							$("#dg").datagrid("deleteRow",rowIdx);
+						}
+						rowIdx=undefined;
+					}
+				},'-',{
+					text:'添加',
+					iconCls: 'icon-add',
+					handler: function(){
+						if(rowIdx==undefined){
+							rowIdx=0;
+							$('#dg').datagrid('insertRow',{
+								index: 0,	// 索引从0开始
+								row: {}
+							});
+							$("#dg").datagrid("beginEdit",rowIdx);
+						}else{
+							$.messager.alert("警告","请完成当前操作","warning");
+						}
+						
+					}
+				},{
+					text:'删除',
+					iconCls: 'icon-remove',
+					handler: function(){
+						var rows = $("#dg").datagrid("getSelections");
+						for(var i=0;i<rows.length;i++){
+							var Idx = $("#dg").datagrid("getRowIndex",rows[i]);
+							$("#dg").datagrid("deleteRow",Idx);
+						}
+					}
+				}]
+
+			})
+		})
+	</script>
+</body>
+</html>
