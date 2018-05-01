@@ -1,11 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>cn.itcast</groupId>
-  <artifactId>common_parent</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
-    <description>统一管理依赖</description>
-  <properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cn.itcast</groupId>
+	<artifactId>common_parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<description>统一管理依赖</description>
+	<properties>
 		<spring.version>4.2.4.RELEASE</spring.version>
 		<struts2.version>2.3.24</struts2.version>
 		<hibernate.version>5.0.7.Final</hibernate.version>
@@ -148,9 +150,9 @@
 			<version>11.2.0.1.0</version> </dependency> -->
 		<!-- https://mvnrepository.com/artifact/com.oracle/ojdbc14 -->
 		<dependency>
-		    <groupId>com.oracle</groupId>
-		    <artifactId>ojdbc14</artifactId>
-		    <version>10.2.0.4.0</version>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc14</artifactId>
+			<version>10.2.0.4.0</version>
 		</dependency>
 		<!-- Excel解析工具类 -->
 		<dependency>
@@ -237,9 +239,34 @@
 		<!-- 引入json-lib的依赖 -->
 		<!-- https://mvnrepository.com/artifact/net.sf.json-lib/json-lib -->
 		<dependency>
-		    <groupId>net.sf.json-lib</groupId>
-		    <artifactId>json-lib</artifactId>
-		    <version>2.4</version>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.ezmorph</groupId>
+			<artifactId>ezmorph</artifactId>
+			<version>1.0.6</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.belerweb/pinyin4j -->
 		<dependency>
@@ -281,17 +308,17 @@
 		</dependency>
 		<!-- itext -->
 		<dependency>
-        	<groupId>com.lowagie</groupId>
-        	<artifactId>itext</artifactId>
-        	<version>2.1.7</version>
-        </dependency>
-        <dependency>
-        	<groupId>com.itextpdf</groupId>
-        	<artifactId>itext-asian</artifactId>
-        	<version>5.2.0</version>
-        </dependency>
-        
-        <!-- groovy -->
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itext-asian</artifactId>
+			<version>5.2.0</version>
+		</dependency>
+
+		<!-- groovy -->
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
@@ -309,19 +336,19 @@
 					<artifactId>itext</artifactId>
 				</exclusion>
 			</exclusions>
-		</dependency>  
+		</dependency>
 		<dependency>
 			<groupId>com.aliyun</groupId>
 			<artifactId>aliyun-java-sdk-core</artifactId>
 			<version>3.2.2</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.aliyun</groupId>
-		    <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
-		    <version>1.0.0</version>
+			<groupId>com.aliyun</groupId>
+			<artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+			<version>1.0.0</version>
 		</dependency>
-		
-		
+
+
 	</dependencies>
 	<build>
 		<pluginManagement>

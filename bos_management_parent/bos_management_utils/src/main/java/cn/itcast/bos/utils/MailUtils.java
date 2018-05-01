@@ -40,6 +40,6 @@ public class MailUtils {
 	}
 
 	public static void main(String[] args) {
-		sendMail("测试邮件", "你好，传智播客", "1023562954@qq.com");
+		sendMail("测试邮件", "Hello World", "1023562954@qq.com");
 	}
 }

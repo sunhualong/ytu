@@ -22,7 +22,7 @@
 	<!-- 连接池 -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@192.168.157.128:1521:ORCL" />
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@192.168.160.128:1521:ORCL" />
 		<property name="user" value="crm288" />
 		<property name="password" value="crm" />
 	</bean>

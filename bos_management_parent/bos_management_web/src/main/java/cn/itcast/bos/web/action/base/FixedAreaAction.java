@@ -7,12 +7,9 @@ import java.util.List;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import com.google.common.collect.Lists;
 
 import cn.itcast.bos.domain.base.FixedArea;
 import cn.itcast.bos.service.base.FixedAreaService;
