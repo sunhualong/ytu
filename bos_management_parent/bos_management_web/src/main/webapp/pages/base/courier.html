@@ -23,7 +23,6 @@
 			function doEdit(){
 				var rows = $("#grid").datagrid("getSelections");
 				if(rows.length==1){
-					alert(rows[0].standard.id);
 					$("#addForm").form("load",rows[0]);
 					$('#addWindow').window("open");
 				}else{
@@ -51,9 +50,6 @@
 				}
 			}
 			
-			function doRestore(){
-				alert("将取派员还原...");
-			}
 			//工具栏
 			var toolbar = [ {
 				id : 'button-add',	
@@ -70,11 +66,6 @@
 				text : '作废',
 				iconCls : 'icon-cancel',
 				handler : doDelete
-			},{
-				id : 'button-restore',
-				text : '还原',
-				iconCls : 'icon-save',
-				handler : doRestore
 			},{
 				id : 'button-search',
 				text : '查找',
@@ -104,16 +95,6 @@
 				width : 120,
 				align : 'center'
 			}, {
-				field : 'checkPwd',
-				title : '查台密码',
-				width : 120,
-				align : 'center'
-			}, {
-				field : 'pda',
-				title : 'PDA号',
-				width : 120,
-				align : 'center'
-			}, {
 				field : 'standard.name',
 				title : '取派标准',
 				width : 120,
@@ -128,11 +109,6 @@
 				field : 'type',
 				title : '取派员类型',
 				width : 120,
-				align : 'center'
-			}, {
-				field : 'company',
-				title : '所属单位',
-				width : 200,
 				align : 'center'
 			}, {
 				field : 'deltag',
@@ -238,20 +214,6 @@
 							<td>
 								<input type="text" name="telephone" class="easyui-validatebox" required="true" />
 							</td>
-							<td>所属单位</td>
-							<td>
-								<input type="text" name="company" class="easyui-validatebox" required="true" />
-							</td>
-						</tr>
-						<tr>
-							<td>查台密码</td>
-							<td>
-								<input type="text" name="checkPwd" class="easyui-validatebox" required="true" />
-							</td>
-							<td>PDA号码</td>
-							<td>
-								<input type="text" name="pda" class="easyui-validatebox" required="true" />
-							</td>
 						</tr>
 						<tr>
 							<td>快递员类型</td>
@@ -303,12 +265,6 @@
 							<td>
 								<input type="text"  class="easyui-combobox" name="standard.name" data-options="valueField:'name',textField:'name',
 											url:'../../standard_findAll.action',panelHeight:'auto'" />
-							</td>
-						</tr>
-						<tr>
-							<td>所属单位</td>
-							<td>
-								<input type="text" name="company" />
 							</td>
 						</tr>
 						<tr>

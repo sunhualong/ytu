@@ -66,14 +66,12 @@
 				text : '作废',
 				iconCls : 'icon-cancel',
 				handler : function(){
-					alert('作废');
-				}
-			},{
-				id : 'button-restore',
-				text : '还原',
-				iconCls : 'icon-save',
-				handler : function(){
-					alert('还原');
+					var rows = $("#grid").datagrid("getSelections");
+                    if(rows.length>=1){
+                        $.messager.alert("警告","确定删除吗？","warning");
+                    }else{
+                        $.messager.alert("提示","请选择一行数据","info");
+                    }
 				}
 			}];
 			

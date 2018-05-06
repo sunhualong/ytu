@@ -36,7 +36,6 @@ public class UserAction extends CommonAction<User> {
 			AuthenticationToken token = new UsernamePasswordToken(model.getUsername(), MD5Utils.md5(model.getPassword()));
 			try {
 				subject.login(token);
-				User user = (User) subject.getPrincipal();
 				return SUCCESS;
 			} catch (AuthenticationException e) {
 				e.printStackTrace();

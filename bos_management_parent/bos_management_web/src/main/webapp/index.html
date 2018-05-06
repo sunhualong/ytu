@@ -49,10 +49,10 @@
 				window.setTimeout(function(){
 					$.messager.show({
 						title:"消息提示",
-						msg:'欢迎登录，超级管理员！ <a href="javascript:void" onclick="top.showAbout();">联系管理员</a>',
+						msg:'欢迎登录，超级管理员！',
 						timeout:5000
 					});
-				},3000);
+				},2000);
 				
 				$("#btnCancel").click(function(){
 					$('#editPwdWindow').window('close');
@@ -84,14 +84,14 @@
 						}else if(item.name === 'CloseOthers'){
 							var tabs = $('#tabs').tabs('tabs');
 							$(tabs).each(function(){
-								if($(this).panel('options').title != '消息中心' && $(this).panel('options').title != currentRightTitle){
+								if($(this).panel('options').title != '欢迎页' && $(this).panel('options').title != currentRightTitle){
 									$('#tabs').tabs('close',$(this).panel('options').title);
 								}
 							});
 						}else if(item.name === 'CloseAll'){
 							var tabs = $('#tabs').tabs('tabs');
 							$(tabs).each(function(){
-								if($(this).panel('options').title != '消息中心'){
+								if($(this).panel('options').title != '欢迎页'){
 									$('#tabs').tabs('close',$(this).panel('options').title);
 								}
 							});
@@ -128,26 +128,6 @@
 				}
 			}
 		
-			/*******顶部特效 *******/
-			/**
-			 * 更换EasyUI主题的方法
-			 * @param themeName
-			 * 主题名称
-			 */
-			changeTheme = function(themeName) {
-				var $easyuiTheme = $('#easyuiTheme');
-				var url = $easyuiTheme.attr('href');
-				var href = url.substring(0, url.indexOf('themes')) + 'themes/'
-						+ themeName + '/easyui.css';
-				$easyuiTheme.attr('href', href);
-				var $iframe = $('iframe');
-				if ($iframe.length > 0) {
-					for ( var i = 0; i < $iframe.length; i++) {
-						var ifr = $iframe[i];
-						$(ifr).contents().find('#easyuiTheme').attr('href', href);
-					}
-				}
-			};
 			// 退出登录
 			function logoutFun() {
 				$.messager
@@ -161,39 +141,26 @@
 			function editPassword() {
 				$('#editPwdWindow').window('open');
 			}
-			// 版权信息
-			function showAbout(){
-				$.messager.alert("bos v2.0综合物流管理平台","设计: 传智播客<br/> 管理员邮箱: itcast_search@163.com <br/>");
-			}
 		</script>
 </head>
 
 <body class="easyui-layout">
 	<div data-options="region:'north',border:false"
-		style="height: 70px; padding: 10px;">
+		style="height: 100px; padding: 0px;">
 		<div>
-			<img src="./images/logo.png" border="0">
-		</div>
-		<div id="sessionInfoDiv"
-			style="position: absolute; right: 5px; top: 10px;">
-			[<strong>超级管理员</strong>]，欢迎你！您使用[<strong>192.168.1.100</strong>]IP登录！
+			<img src="./images/logo.png" height="80px" border="0">
+			<img src="./images/logo.png" height="80px" border="0">
+			<img src="./images/logo.png" height="80px" border="0">
+			<img src="./images/logo.png" height="80px" border="0">
+			<img src="./images/logo.png" height="80px" border="0">
+			<img src="./images/logo.png" height="80px" border="0">
 		</div>
 		<div style="position: absolute; right: 5px; bottom: 10px;">
 			<a href="javascript:void(0);" class="easyui-menubutton"
-				data-options="menu:'#layout_north_pfMenu',iconCls:'icon-ok'">更换皮肤</a>
-			<a href="javascript:void(0);" class="easyui-menubutton"
-				data-options="menu:'#layout_north_kzmbMenu',iconCls:'icon-help'">控制面板</a>
-		</div>
-		<div id="layout_north_pfMenu" style="width: 120px; display: none;">
-			<div onclick="changeTheme('default');">default</div>
-			<div onclick="changeTheme('gray');">gray</div>
-			<div onclick="changeTheme('black');">black</div>
-			<div onclick="changeTheme('bootstrap');">bootstrap</div>
-			<div onclick="changeTheme('metro');">metro</div>
+				data-options="menu:'#layout_north_kzmbMenu'">控制面板</a>
 		</div>
 		<div id="layout_north_kzmbMenu" style="width: 100px; display: none;">
 			<div onclick="editPassword();">修改密码</div>
-			<div onclick="showAbout();">联系管理员</div>
 			<div class="menu-sep"></div>
 			<div onclick="logoutFun();">退出系统</div>
 		</div>
@@ -213,29 +180,11 @@
 	</div>
 	<div data-options="region:'center'">
 		<div id="tabs" fit="true" class="easyui-tabs" border="false">
-			<div title="消息中心" id="subWarp"
+			<div title="欢迎页" id="subWarp"
 				style="width: 100%; height: 100%; overflow: hidden">
-				<iframe src="./home.html"
-					style="width: 100%; height: 100%; border: 0;"></iframe>
+				<img alt="欢迎登录" src="./images/welcome.png" style="width: 100%; height: 100%">
 			</div>
 		</div>
-	</div>
-	<div data-options="region:'south',border:false"
-		style="height: 50px; padding: 10px;">
-		<table style="width: 100%;">
-			<tbody>
-				<tr>
-					<td style="width: 400px;">
-						<div style="color: #999; font-size: 8pt;">
-							BOSv2.0综合物流管理平台 | Powered by <a href="http://www.itcast.cn/">传智播客</a>
-						</div>
-					</td>
-					<td style="width: *;" class="co1"><span id="online"
-						style="background: url(./images/online.png) no-repeat left; padding-left: 18px; margin-left: 3px; font-size: 8pt; color: #005590;">在线人数:1</span>
-					</td>
-				</tr>
-			</tbody>
-		</table>
 	</div>
 
 	<!--修改密码窗口-->
