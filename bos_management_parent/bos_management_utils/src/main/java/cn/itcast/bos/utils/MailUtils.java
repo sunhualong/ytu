@@ -16,7 +16,7 @@ public class MailUtils {
 	private static String password = "shl999"; 
 
 	private static String from = "shualong163@163.com"; // 使用当前账户
-	public static String activeUrl = "http://localhost:8081/bos_fore/customer_activeMail.action";
+	public static String activeUrl = "http://localhost:8080/bos_fore/customer_activeMail.action";
 
 	public static void sendMail(String subject, String content, String to) {
 		Properties props = new Properties();

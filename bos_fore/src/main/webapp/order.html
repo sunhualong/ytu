@@ -39,26 +39,26 @@
 						<div class="collapse navbar-collapse">
 							<ul class="nav navbar-nav navbar-right" id="menu">
 								<li>
-									<a href="index.html" target="_blank">首页</a>
-								</li>
-								<li>
-									<a href="order.html" target="_blank">在线下单</a>
-								</li>
-								<li>
-									<a href="express_manage.html" target="_blank">快件管理</a>
-								</li>
-								<li>
-									<a href="userinfo.html" target="_blank">账户管理</a>
-								</li>
-								<li>
-									<a href="search.html" target="_blank">查询服务</a>
-								</li>
-								<li>
-									<a href="myhome.html" target="_blank">我的主页</a>
-								</li>
-								<li>
-									<a href="login.html" target="_blank">登录</a>
-								</li>
+	                                <a href="index.html" target="_blank">首页</a>
+	                            </li>
+	                            <li>
+	                                <a href="" target="_blank">点餐</a>
+	                            </li>
+	                            <li>
+	                                <a href="" target="_blank">购物车</a>
+	                            </li>
+	                            <li>
+	                                <a href="" target="_blank">订单</a>
+	                            </li>
+	                            <li>
+	                                <a href="order.html" target="_blank">在线下单</a>
+	                            </li>
+	                            <li>
+	                                <a href="" target="_blank">我的主页</a>
+	                            </li>
+	                            <li>
+	                                <a href="login.html" target="_blank">登录</a>
+	                            </li>
 							</ul>
 						</div>
 					</div>
@@ -71,10 +71,6 @@
 				<div class="tab-title ">
 					<ul class="nav nav-tabs container" role="tablist">
 						<li role="presentation" class="active">
-							<a href="#home" aria-controls="home" role="tab" data-toggle="tab">单件下单</a>
-						</li>
-						<li role="presentation">
-							<a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">批量下单</a>
 						</li>
 					</ul>
 					</ul>
@@ -95,21 +91,13 @@
 						</div>
 					</div>
 					<div role="tabpanel" class="tab-pane fade in active" id="home">
-						<ul class="nav nav-tabs">
-							<li role="presentation" class="active">
-								<a href="#one" aria-controls="home" role="tab" data-toggle="tab">国内</a>
-							</li>
-							<li role="presentation">
-								<a href="#two" aria-controls="profile" role="tab" data-toggle="tab">港澳台</a>
-							</li>
-						</ul>
 						<form action="order_add.action" id="orderForm1" method="post">
 						<div class="tab-content">
 							<div role="tabpanel" class="tab-pane fade in active" id="one">
 								<!--寄件人信息 -->
 								<div class="model">
 									<div class="areatitle">
-										<h4><span class="zhezhao">寄件人信息</span></h4>
+										<h4><span class="zhezhao">发货方信息</span></h4>
 									</div>
 									<div class="col-md-5">
 											<div class="orderinfo">
@@ -175,7 +163,7 @@
 								<!--收件人信息 -->
 								<div class="model clearfix">
 									<div class="areatitle">
-										<h4><span class="zhezhao">收件人信息</span></h4>
+										<h4><span class="zhezhao">收货人信息</span></h4>
 									</div>
 									<div class="col-md-5">
 											<div class="orderinfo">
@@ -229,18 +217,18 @@
 								<!--快件信息 -->
 								<div class="model clearfix">
 									<div class="areatitle">
-										<h4><span class="zhezhao">快件信息</span></h4>
+										<h4><span class="zhezhao">货物信息</span></h4>
 									</div>
 									<div class="col-md-5">
 											<div class="orderinfo">
 												<div class="form-group" id="sender-group">
-													<label class="col-sm-3 control-label"><b>*</b>拖寄物：</label>
+													<label class="col-sm-3 control-label"><b>*</b>规格：</label>
 													<div class="col-sm-8">
 														<select name="goodsType" class="form-control">
-															<option value="1">文件</option>
-															<option value="2">衣服</option>
-															<option value="3">食品</option>
-															<option value="4">电子产品</option>
+															<option value="1">大份</option>
+															<option value="2">中份</option>
+															<option value="3">小份</option>
+															<option value="4">液态</option>
 															<option value="5">其他</option>
 														</select>
 													</div>
@@ -257,7 +245,7 @@
 														<input name="remark" type="text" class="form-control" placeholder="备注不超过20个字">
 													</div>
 												</div>
-												<div class="form-group">
+												<!-- <div class="form-group">
 													<label for="inputPassword" class="col-sm-3 control-label">付款方式：</label>
 													<div class="col-sm-8">
 														<select name="payTypeNum" class="form-control">
@@ -266,7 +254,7 @@
 															<option value="3">到付</option>
 														</select>
 													</div>
-												</div>
+												</div> -->
 												</div>
 										</div>
 										<div class="col-md-7"></div>
@@ -293,17 +281,9 @@
 								</div>
 								</form>
 							</div>
-							<div class="col-md-11 submit">
-								<div class="xieyi"><input type="checkbox" checked="checked" />我已阅读并同意《快件运单契约条款》 </div>
-								<div class="tijiao">
-									<div class="tjtext">
-										<p class="red">1、如果您在周六、日等法定节假日期间寄件，将会做相应加时。（以上“预计时效”已做相应加时）</p>
-										<p class="red">2、如果您收方地址属于偏远地区，在“预计时效”基础上需增加0.5天.</p>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-1 ordertj">
-								<a href="javascript:$('#orderForm1').submit();" class="btn btn-danger">提交</a>
+							
+							<div class="col-md-7 ordertj">
+								<a href="javascript:$('#orderForm1').submit();" class="btn btn-danger btn-lg btn-block">提交</a>
 							</div>
 						</div>
 			</section>

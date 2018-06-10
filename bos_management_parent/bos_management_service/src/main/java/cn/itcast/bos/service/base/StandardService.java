@@ -19,4 +19,6 @@ public interface StandardService {
 
 	List<Standard> findAll();
 
+    void delete(String ids);
+
 }

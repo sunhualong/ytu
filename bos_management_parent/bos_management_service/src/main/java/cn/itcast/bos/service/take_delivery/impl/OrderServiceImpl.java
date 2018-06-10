@@ -1,15 +1,26 @@
 package cn.itcast.bos.service.take_delivery.impl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.itcast.bos.dao.base.AreaDao;
+import cn.itcast.bos.dao.base.CourierDao;
 import cn.itcast.bos.dao.base.FixedAreaDao;
 import cn.itcast.bos.dao.take_delivery.OrderDao;
 import cn.itcast.bos.dao.take_delivery.WorkBillDao;
@@ -35,16 +46,18 @@ public class OrderServiceImpl implements OrderService {
 	private WorkBillDao workBillDao;
 	@Autowired
 	private AreaDao areaDao;
+	@Autowired
+	private CourierDao courierDao;
 	
 	@Override
 	public void save(Order order) {
-		Customer customer = customerService.findByAddress(order.getSendAddress());
-		if(customer!=null&&StringUtils.isNotBlank(customer.getFixedAreaId())){
-			FixedArea fixedArea = fixedAreaDao.findOne(customer.getFixedAreaId());
-			findCouriers(fixedArea,order);
-			return;
-			
-		}else{
+		//Customer customer = customerService.findByAddress(order.getSendAddress());
+//		if(customer!=null&&StringUtils.isNotBlank(customer.getFixedAreaId())){
+//			FixedArea fixedArea = fixedAreaDao.findOne(customer.getFixedAreaId());
+//			findCouriers(fixedArea,order);
+//			return;
+//			
+//		}else{
 			Area area= order.getSendArea();
 			area = areaDao.findByProvinceAndCityAndDistrict(area.getProvince(),area.getCity(),area.getDistrict());
 			Set<SubArea> subareas = area.getSubareas();
@@ -54,10 +67,10 @@ public class OrderServiceImpl implements OrderService {
 					FixedArea fixedArea=subArea.getFixedArea();
 					findCouriers(fixedArea,order);
 					return;
-				}
+//				}
 			}
 		}
-		order.setOrderType("1");
+		order.setOrderType("人工分单");
 		order.setStatus("1");
 		order.setOrderTime(new Date());
 		order.setSendArea(null);
@@ -80,7 +93,7 @@ public class OrderServiceImpl implements OrderService {
 		Set<Courier> couriers = fixedArea.getCouriers();
 		for (Courier courier : couriers) {
 			order.setCourier(courier);
-			order.setOrderType("1");
+			order.setOrderType("已分单");
 			order.setStatus("1");
 			order.setOrderTime(new Date());
 			order.setSendArea(null);
@@ -92,5 +105,42 @@ public class OrderServiceImpl implements OrderService {
 			System.out.println(msg);
 			return ;
 		}
+		order.setOrderType("人工分单");
+        order.setStatus("1");
+        order.setOrderTime(new Date());
+        order.setSendArea(null);
+        order.setRecArea(null);
+        orderDao.save(order);
 	}
+    @Override
+    public List<Order> pageQueryByOrderType(int page, int rows) {
+        Pageable pageable = new PageRequest(page-1, rows);
+        Specification<Order> specification = new Specification<Order>() {
+            @Override
+            public Predicate toPredicate(Root<Order> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                return cb.equal(root.get("orderType").as(String.class), "人工分单");
+            }
+        };
+        Page<Order> all = orderDao.findAll(specification, pageable);
+        return all.getContent();
+    }
+    @Override
+    public Long count() {
+        Specification<Order> specification = new Specification<Order>() {
+            @Override
+            public Predicate toPredicate(Root<Order> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                return cb.equal(root.get("orderType").as(String.class), "人工分单");
+            }
+        };
+        return orderDao.count(specification);
+    }
+    @Override
+    public void updateCourier(Order model) {
+        Order order = orderDao.findOne(model.getId());
+        Courier courier = courierDao.findOne(model.getCourier().getId());
+        order.setCourier(courier);
+        order.setOrderType("已分单");
+        WorkBill workBill = createWorkBill(order);
+        workBillDao.save(workBill);
+    }
 }

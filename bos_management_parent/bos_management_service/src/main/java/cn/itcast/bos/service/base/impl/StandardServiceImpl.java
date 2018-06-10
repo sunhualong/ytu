@@ -42,4 +42,13 @@ public class StandardServiceImpl implements StandardService {
 	public List<Standard> findAll() {
 		return standardDao.findAll();
 	}
+
+    @Override
+    public void delete(String ids) {
+        String[] strings = ids.split(",");
+        for (String id : strings) {
+            standardDao.delete(Integer.valueOf(id));
+        }
+        
+    }
 }

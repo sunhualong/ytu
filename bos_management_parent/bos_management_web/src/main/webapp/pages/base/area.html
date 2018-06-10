@@ -18,23 +18,37 @@
 		<script type="text/javascript">
 			function doAdd(){
 				$('#addWindow').window("open");
-			}
-			
-			function doView(){
-				alert("修改...");
+                $("#areaId").form("clear")
 			}
 			
 			function doDelete(){
-				alert("删除...");
+			    //首先判断是否选中行数据
+	            var rowdeletes= $("#grid").datagrid("getSelections");
+	                if(rowdeletes.length!=0){
+	                    //表示有选中的数据，再次提示是否要删除选中的数据
+	                    $.messager.confirm("删除","确定要删除选中的数据么？",function(r){
+	                        if(r){
+	                          //定义数组，存放要删除的id
+	                        var array = new Array();
+	                          for(var i =0;i<rowdeletes.length;i++){
+	                            array.push(rowdeletes[i].id) ;
+	                            //把数组中的元素用逗号隔开变成String类型
+	                            var deleId = array.join(",");
+	                            //向后台发送数据请求
+	                            window.location.href="../../area_deleteId.action?deleId="+deleId;
+	                          }
+	                        }
+	                    })
+	                    
+	                }else{
+	                    //表示没有选中删除的数据
+	                    $.messager.alert("警告","请选择你要作废的区域","warning")
+	                }
+	                
 			}
 			
 			//工具栏
 			var toolbar = [ {
-				id : 'button-edit',	
-				text : '修改',
-				iconCls : 'icon-edit',
-				handler : doView
-			}, {
 				id : 'button-add',
 				text : '增加',
 				iconCls : 'icon-add',
@@ -150,11 +164,27 @@
 			<div region="north" style="height:31px;overflow:hidden;" split="false" border="false">
 				<div class="datagrid-toolbar">
 					<a id="save" icon="icon-save" href="#" class="easyui-linkbutton" plain="true">保存</a>
+					<script type="text/javascript">
+                    $(function(){
+                        //页面加载完毕，给保存按钮添加点击事件函数
+                        //先清除表单的数据
+                        
+                        $("#save").click(function(){
+                            //判断表单数据校验是否通过
+                           var v=   $("#areaId").form("validate");
+                            if(v){
+                                //表单校验成功，给保存按钮点击提交
+                                $("#areaId").submit();
+                            }
+                        });
+                    })
+                    
+                    </script>
 				</div>
 			</div>
 
 			<div region="center" style="overflow:auto;padding:5px;" border="false">
-				<form>
+				<form id="areaId" action="../../areaAction_save.action" method="post">
 					<table class="table-edit" width="80%" align="center">
 						<tr class="title">
 							<td colspan="2">区域信息</td>
@@ -181,18 +211,6 @@
 							<td>邮编</td>
 							<td>
 								<input type="text" name="postcode" class="easyui-validatebox" required="true" />
-							</td>
-						</tr>
-						<tr>
-							<td>简码</td>
-							<td>
-								<input type="text" name="shortcode" class="easyui-validatebox" required="true" />
-							</td>
-						</tr>
-						<tr>
-							<td>城市编码</td>
-							<td>
-								<input type="text" name="citycode" class="easyui-validatebox" required="true" />
 							</td>
 						</tr>
 					</table>

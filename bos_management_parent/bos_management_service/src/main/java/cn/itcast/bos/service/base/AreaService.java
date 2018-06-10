@@ -17,4 +17,8 @@ public interface AreaService {
 
 	List<Area> findAllByQ(String q);
 
+    void saveOne(Area model);
+
+    void deleteId(String deleId);
+
 }

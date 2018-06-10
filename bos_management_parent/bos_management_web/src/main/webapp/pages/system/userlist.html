@@ -47,6 +47,12 @@
 		
 			// 定义标题栏
 			var columns = [ [ {
+                field : 'username',
+                title : '用户名',
+                width : 60,
+                rowspan : 2,
+                align : 'center'
+            },{
 				field : 'gender',
 				title : '性别',
 				width : 60,
@@ -64,9 +70,14 @@
 			}, {
 				field : 'telephone',
 				title : '电话',
-				width : 800,
+				width : 120,
 				rowspan : 2
-			} ], [ {
+			}, {
+                field : 'remark',
+                title : '备注',
+                width : 500,
+                rowspan : 2
+            } ], [ {
 				field : 'station',
 				title : '单位',
 				width : 80,

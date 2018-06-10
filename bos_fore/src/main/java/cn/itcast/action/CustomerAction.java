@@ -63,28 +63,31 @@ public class CustomerAction extends CommonAction<Customer> {
 			model.setPassword(MD5Utils.md5(model.getPassword()));
 			
 			final String activeCode = RandomStringUtils.randomNumeric(24);
-			jmsTemplate.send("sendEmail",new MessageCreator() {
-				public Message createMessage(Session session) throws JMSException {
-					MapMessage mapMessage = session.createMapMessage();
-					String url = MailUtils.activeUrl+"?telephone="+model.getTelephone()+"&activeCode="+activeCode;
-					String content = "尊敬的用户,请点击以下链接进行账号激活<br/>"
-							+ "<a href='"+url+"'>点击激活</a>";
-					mapMessage.setString("content",content);
-					mapMessage.setString("to", model.getEmail());
-					return mapMessage;
-				}
-			});
+//			jmsTemplate.send("sendEmail",new MessageCreator() {
+//				public Message createMessage(Session session) throws JMSException {
+//					MapMessage mapMessage = session.createMapMessage();
+//					String url = MailUtils.activeUrl+"?telephone="+model.getTelephone()+"&activeCode="+activeCode;
+//					String content = "尊敬的用户,请点击以下链接进行账号激活<br/>"
+//							+ "<a href='"+url+"'>点击激活</a>";
+//					mapMessage.setString("content",content);
+//					mapMessage.setString("to", model.getEmail());
+//					return mapMessage;
+//				}
+//			});
 			redisTemplate.opsForValue().set(model.getTelephone(), activeCode, 1, TimeUnit.DAYS);
+			String url = MailUtils.activeUrl+"?telephone="+model.getTelephone()+"&activeCode="+activeCode;
+			String content = "尊敬的用户,请点击以下链接进行账号激活<br/><a href='"+url+"'>点击激活</a>";
+			MailUtils.sendMail("激活邮件", content, model.getEmail());
 			
-			jmsTemplate.send("sendMsg", new MessageCreator() {
-				public Message createMessage(Session session) throws JMSException {
-					MapMessage mapMessage = session.createMapMessage();
-					mapMessage.setString("telephone", model.getTelephone());
-					String content = "恭喜您,注册成功! 请前往邮箱"+model.getEmail()+"激活";
-					mapMessage.setString("content",content);
-					return mapMessage;
-				}
-			});
+//			jmsTemplate.send("sendMsg", new MessageCreator() {
+//				public Message createMessage(Session session) throws JMSException {
+//					MapMessage mapMessage = session.createMapMessage();
+//					mapMessage.setString("telephone", model.getTelephone());
+//					String content = "恭喜您,注册成功! 请前往邮箱"+model.getEmail()+"激活";
+//					mapMessage.setString("content",content);
+//					return mapMessage;
+//				}
+//			});
 			customerService.save(model);
 			return SUCCESS;
 		}else{
@@ -124,7 +127,7 @@ public class CustomerAction extends CommonAction<Customer> {
 		System.out.println(valuedateCodeSession+"   "+valuedateCode+"    "+model.getTelephone()+"   "+model.getPassword());
 		if(valuedateCode!=null&&valuedateCode.equals(valuedateCodeSession)){
 			Customer customer = customerService.findByTelephoneAndPassword(model.getTelephone(), MD5Utils.md5(model.getPassword()));
-			if(customer!=null){
+			if(customer!=null&&customer.getType()!=null&&customer.getType() == 1){
 				ServletActionContext.getRequest().getSession().setAttribute("customer", customer);
 				return SUCCESS;
 			}

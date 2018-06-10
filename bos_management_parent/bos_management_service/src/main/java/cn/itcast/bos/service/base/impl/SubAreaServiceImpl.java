@@ -63,4 +63,12 @@ public class SubAreaServiceImpl implements SubAreaService {
 		return subAreaDao.findGroupedSubArea();
 	}
 
+    @Override
+    public void deleteByIds(String deleId) {
+        String[] split = deleId.split(",");
+        for (String string : split) {
+            subAreaDao.delete(string);
+        }
+    }
+
 }

@@ -28,7 +28,7 @@ public class CourierServiceImpl implements CourierService {
 	}
 
 	@Override
-	@RequiresPermissions("abc")//注解方式实现权限控制
+	@RequiresPermissions("courier:add")//注解方式实现权限控制
 	public void save(Courier model) {
 		courierDao.save(model);
 	}
@@ -37,7 +37,7 @@ public class CourierServiceImpl implements CourierService {
 	public void updateDelTag(String ids) {
 		//编码方式实现权限控制
 		Subject subject = SecurityUtils.getSubject();
-		subject.checkPermission("abc");
+		subject.checkPermission("courier:delete");
 		String[] idArr=ids.split(",");
 		for (String id : idArr) {
 			courierDao.updateDelTag(Integer.valueOf(id));
@@ -53,4 +53,16 @@ public class CourierServiceImpl implements CourierService {
 	public List<Courier> findAll() {
 		return courierDao.findAll();
 	}
+
+    @Override
+    public List<Courier> findByFixedAreaId(String fixedAreaId) {
+        List<Courier> list = courierDao.findByFixedAreaId(fixedAreaId);
+        return list;
+    }
+
+    @Override
+    public List<Courier> findAllCourier() {
+        List<Courier> list = courierDao.findAll();
+        return list;
+    }
 }

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -41,7 +42,7 @@ public class WorkBill {
 	@Column(name = "C_SMSNUMBER")
 	private String smsNumber; // 短信序号
 
-	@OneToOne
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "C_COURIER")
 	private Courier courier;// 快递员
 

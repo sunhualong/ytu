@@ -18,4 +18,8 @@ public interface RoleService {
 
 	List<Role> findByUser(User user);
 
+    Role findById(Integer id);
+
+    void editSave(Role model, Integer[] permissionIds, String menuIds);
+
 }

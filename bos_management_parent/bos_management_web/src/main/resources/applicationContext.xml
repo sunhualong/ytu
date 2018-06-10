@@ -105,7 +105,7 @@
 				/css/** = anon
 				/js/** = anon
 				/images/** = anon
-				/services/** = anon
+				/service/** = anon
 				/pages/base/courier.jsp* = perms[courier]
 				/pages/base/area.html* = roles[base]
 				/** = authc

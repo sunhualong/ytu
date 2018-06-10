@@ -40,6 +40,26 @@ public class CourierAction extends CommonAction<Courier> {
 
 	@Autowired
 	private CourierService courierService;
+	
+	private String fixedAreaId;
+	
+	   /**
+     * 查询所有快递员
+     */
+    @Action("courier_findAllCourier")
+    public String findAllCourier() {
+        List<Courier> list = courierService.findAllCourier();
+        //将list转为json数据类型
+        this.javaToJson(list, new String[] {"fixedAreas"});
+        return NONE;
+    }
+	
+	@Action("courier_queryByFixedArea")
+	public String queryByFixedArea() {
+	    List<Courier> list = courierService.findByFixedAreaId(fixedAreaId);
+	    this.javaToJson(list, new String[]{"fixedAreas"});
+	    return NONE;
+	}
 
 	@Action("courier_pageQuery")
 	public String pageQuery() throws IOException{
@@ -115,5 +135,13 @@ public class CourierAction extends CommonAction<Courier> {
 		this.javaToJson(list, new String[]{"fixedAreas"});
 		return NONE;
 	}
+
+    public String getFixedAreaId() {
+        return fixedAreaId;
+    }
+
+    public void setFixedAreaId(String fixedAreaId) {
+        this.fixedAreaId = fixedAreaId;
+    }
 
 }

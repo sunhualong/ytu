@@ -28,6 +28,15 @@ public class SubAreaAction extends CommonAction<SubArea> {
 	
 	private String ids;
 	
+	private String deleId;
+	
+	@Action(value="subArea_deleteId",results= {@Result(name="success",location="/pages/base/sub_area.html",type="redirect")})
+	public String deleteByIds() {
+	    subAreaService.deleteByIds(deleId);
+	    
+	    return SUCCESS;
+	}
+	
 	@Action(value="subArea_save",results={@Result(name="success",location="/pages/base/sub_area.html",type="redirect")})
 	public String save(){
 		subAreaService.save(model);
@@ -73,7 +82,7 @@ public class SubAreaAction extends CommonAction<SubArea> {
 				}
 			}
 		}
-		String filename="找你干啥.xls";
+		String filename="分区数据.xls";
 		ServletOutputStream outputStream = ServletActionContext.getResponse().getOutputStream();
 		String mimeType = ServletActionContext.getServletContext().getMimeType(filename);
 		ServletActionContext.getResponse().setContentType(mimeType);
@@ -93,5 +102,11 @@ public class SubAreaAction extends CommonAction<SubArea> {
 	public void setIds(String ids) {
 		this.ids = ids;
 	}
+    public String getDeleId() {
+        return deleId;
+    }
+    public void setDeleId(String deleId) {
+        this.deleId = deleId;
+    }
 
 }

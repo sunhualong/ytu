@@ -21,4 +21,6 @@ public interface SubAreaService {
 
 	List<SubArea> findGroupedSubArea();
 
+    void deleteByIds(String deleId);
+
 }

@@ -38,4 +38,17 @@ public class AreaServiceImpl implements AreaService {
 		String cre=q+"%";
 		return areaDao.findByQ(cre,cre,cre,cre,cre);
 	}
+
+    @Override
+    public void saveOne(Area model) {
+        areaDao.save(model);
+    }
+
+    @Override
+    public void deleteId(String deleId) {
+        String [] deleteIds=deleId.split(",");
+        for (String id : deleteIds) {
+            areaDao.delete(id);
+        }
+    }
 }

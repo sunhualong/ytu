@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -33,13 +34,13 @@ public class Role implements Serializable{
 	@ManyToMany(mappedBy = "roles")
 	private Set<User> users = new HashSet<User>(0);
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "T_ROLE_PERMISSION", joinColumns = {
 			@JoinColumn(name = "C_ROLE_ID", referencedColumnName = "C_ID") }, inverseJoinColumns = {
 					@JoinColumn(name = "C_PERMISSION_ID", referencedColumnName = "C_ID") })
 	private Set<Permission> permissions = new HashSet<Permission>(0);
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "T_ROLE_MENU", joinColumns = {
 			@JoinColumn(name = "C_ROLE_ID", referencedColumnName = "C_ID") }, inverseJoinColumns = {
 					@JoinColumn(name = "C_MENU_ID", referencedColumnName = "C_ID") })

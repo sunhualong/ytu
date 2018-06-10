@@ -2,36 +2,26 @@ package cn.itcast.bos.web.action.base;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.ServletOutputStream;
-import javax.sql.DataSource;
-import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
-import org.apache.struts2.convention.annotation.Namespace;
-import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Controller;
-
-import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ModelDriven;
 
 import cn.itcast.bos.domain.base.Area;
 import cn.itcast.bos.service.base.AreaService;
@@ -46,8 +36,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.json.JSONObject;
-import net.sf.json.JsonConfig;
 
 public class AreaAction extends CommonAction<Area> {
 
@@ -58,6 +46,76 @@ public class AreaAction extends CommonAction<Area> {
 	private File xlsFile;
 	private String contentType;
 	private String filename;
+	
+	/**
+     * 添加区域功能
+     * @return
+     */
+    @Action(value="areaAction_save",results={
+            @Result(name="success",type="redirect",location="/pages/base/area.html"),
+            @Result(name="input",type="redirect",location="/flag.html")})
+    public String save(){
+        //查询所有的区域
+        List<Area> listArea=areaService.findAll();
+        //获取所有区域的id
+        int flag=0;
+        for(Area area : listArea){
+            if(model.getDistrict().equals(area.getDistrict()) && model.getCity().equals(area.getCity()) && model.getProvince().equals(area.getProvince())){
+                flag=1;
+            }
+            
+        }
+        if(flag==0){
+            String id = UUID.randomUUID().toString();
+            model.setId(id);
+            //获得区域的省市区为其添加城市城市简码和城市编码
+            //赋值城市简码
+            String province  =model.getProvince();
+            String city=model.getCity();
+            String district=model.getDistrict();
+            
+            
+            //先把最后一个字去掉
+            //赋值城市编码
+            province.substring(0, province.length()-1);
+            city.substring(0, city.length()-1);
+            district.substring(0, district.length()-1);
+            
+            String citycode=PinYin4jUtils.hanziToPinyin(city.substring(0, city.length()-1),"");
+            model.setCitycode(citycode);
+            
+            //赋值城市简码
+            String temp = province.substring(0,province.length()-1)+city.substring(0, city.length()-1)+district.substring(0, district.length()-1);
+             String[] shortcodearr=PinYin4jUtils.getHeadByString(temp);
+             String shortcode=StringUtils.join(shortcodearr);
+             model.setShortcode(shortcode);
+            
+            areaService.saveOne(model);
+            return SUCCESS;
+        }else{
+            return INPUT;
+        }
+    }
+    
+  //通过属性驱动获取页面传过来的数据
+    private String deleId;
+    
+    
+    public void setDeleId(String deleId) {
+        this.deleId = deleId;
+    }
+    
+    /**
+     * 区域删除
+     * @return
+     */
+    @Action(value="area_deleteId",results={@Result(name="success",type="redirect",location="/pages/base/area.html")})
+    public String deleteById(){
+        //获取页面传过来的数据
+        areaService.deleteId(deleId);
+        return SUCCESS;
+    }
+
 
 	@Action("area_findAll")
 	public String findAll(){
@@ -124,7 +182,7 @@ public class AreaAction extends CommonAction<Area> {
 		ServletActionContext.getResponse().setContentType(mimeType);
 		ServletActionContext.getResponse().setHeader("content-disposition", "attachment;filename="+filename);
 		
-		String path = ServletActionContext.getServletContext().getRealPath("WEB-INF/template/report1.jrxml");
+		String path = ServletActionContext.getServletContext().getRealPath("WEB-INF/template/area2.jrxml");
 		Map<String, Object> param = new HashMap<>();
 		param.put("compony", "哈哈哈");
 		JasperReport report = JasperCompileManager.compileReport(path);

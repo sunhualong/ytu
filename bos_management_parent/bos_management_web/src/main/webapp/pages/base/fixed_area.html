@@ -74,12 +74,14 @@
 				text : '删除',
 				iconCls : 'icon-cancel',
 				handler : doDelete
-			},{
+			}
+			/* ,{
 				id : 'button-association',
 				text : '关联客户',
 				iconCls : 'icon-sum',
 				handler : doAssociations
-			},{
+			} */
+			,{
 				id : 'button-association-courier',
 				text : '关联快递员',
 				iconCls : 'icon-sum',
@@ -187,7 +189,6 @@
 			});
 		
 			function doDblClickRow(rowIndex, rowData){
-				alert("双击表格数据..."+rowData.id);
 				$('#association_subarea').datagrid( {
 					fit : true,
 					border : true,
@@ -237,7 +238,8 @@
 						title : '关键字',
 						width : 120,
 						align : 'center'
-					}, {
+					}
+					/*, {
 						field : 'startNum',
 						title : '起始号',
 						width : 100,
@@ -257,9 +259,10 @@
 						title : '位置',
 						width : 200,
 						align : 'center'
-					} ] ]
+					}*/
+					] ]
 				});
-				$('#association_customer').datagrid( {
+				/* $('#association_customer').datagrid( {
 					fit : true,
 					border : true,
 					rownumbers : true,
@@ -281,8 +284,71 @@
 						width : 120,
 						align : 'center'
 					}]]
-				});
-				
+				}); */
+				$('#association_courier').datagrid( {
+                    fit : true,
+                    border : true,
+                    rownumbers : true,
+                    striped : true,
+                    url : "../../courier_queryByFixedArea.action?fixedAreaId="+rowData.id,
+                    columns :[ [ {
+                        field : 'id',
+                        checkbox : true,
+                    },{
+                        field : 'courierNum',
+                        title : '工号',
+                        width : 80,
+                        align : 'center'
+                    },{
+                        field : 'name',
+                        title : '姓名',
+                        width : 80,
+                        align : 'center'
+                    }, {
+                        field : 'telephone',
+                        title : '手机号',
+                        width : 120,
+                        align : 'center'
+                    }, {
+                        field : 'standard.name',
+                        title : '取派标准',
+                        width : 120,
+                        align : 'center',
+                        formatter : function(data,row, index){
+                            if(row.standard != null){
+                                return row.standard.name;
+                            }
+                            return "";
+                        }
+                    }, {
+                        field : 'type',
+                        title : '取派员类型',
+                        width : 120,
+                        align : 'center'
+                    }, {
+                        field : 'deltag',
+                        title : '是否作废',
+                        width : 80,
+                        align : 'center',
+                        formatter : function(data,row, index){
+                            if(data=="0"){
+                                return "正常使用"
+                            }else{
+                                return "已作废";
+                            }
+                        }
+                    }, {
+                        field : 'vehicleType',
+                        title : '车型',
+                        width : 100,
+                        align : 'center'
+                    }, {
+                        field : 'vehicleNum',
+                        title : '车牌号',
+                        width : 120,
+                        align : 'center'
+                    } ] ]
+                });
 			}
 		</script>
 	</head>
@@ -296,8 +362,8 @@
 				<div title="关联分区" id="subArea" style="width:100%;height:100%;overflow:hidden">
 					<table id="association_subarea"></table>
 				</div>
-				<div title="关联客户" id="customers" style="width:100%;height:100%;overflow:hidden">
-					<table id="association_customer"></table>
+				<div title="关联小哥" id="customers" style="width:100%;height:100%;overflow:hidden">
+					<table id="association_courier"></table>
 				</div>
 			</div>
 		</div>

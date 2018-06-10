@@ -3,6 +3,7 @@ package cn.itcast.bos.web.action.base;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,6 @@ public class StandardAction extends CommonAction<Standard> {
 	public String pageQuery() throws IOException{
 		Pageable pageable = this.createPageable();
 		Page<Standard> list = standardService.findAll(pageable);
-//		List<Standard> list = standardService.findByName("十斤");
-//		List<Standard> list = standardService.findByStandardName("十斤");
 		this.javaToJson(list, null);
 		return NONE;
 	}
@@ -35,6 +34,13 @@ public class StandardAction extends CommonAction<Standard> {
 	public String save(){
 		standardService.save(model);
 		return SUCCESS;
+	}
+	
+	@Action(value="standard_del",results= {@Result(name="success",location="/pages/base/standard.html",type="redirect")})
+	public String delete() {
+	    String ids = (String) ServletActionContext.getRequest().getParameter("ids");
+	    standardService.delete(ids);
+	    return SUCCESS;
 	}
 	
 

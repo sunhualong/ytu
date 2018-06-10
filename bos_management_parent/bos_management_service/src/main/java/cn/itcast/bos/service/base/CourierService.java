@@ -20,4 +20,8 @@ public interface CourierService {
 
 	List<Courier> findAll();
 
+    List<Courier> findByFixedAreaId(String fixedAreaId);
+
+    List<Courier> findAllCourier();
+
 }

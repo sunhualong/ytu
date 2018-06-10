@@ -25,7 +25,28 @@
 			}
 			
 			function doDelete(){
-				alert("删除...");
+                //首先判断是否选中行数据
+                var rowdeletes= $("#grid").datagrid("getSelections");
+                    if(rowdeletes.length!=0){
+                        //表示有选中的数据，再次提示是否要删除选中的数据
+                        $.messager.confirm("删除","确定要删除选中的数据么？",function(r){
+                            if(r){
+                              //定义数组，存放要删除的id
+                            var array = new Array();
+                              for(var i =0;i<rowdeletes.length;i++){
+                                array.push(rowdeletes[i].id) ;
+                                //把数组中的元素用逗号隔开变成String类型
+                                var deleId = array.join(",");
+                                //向后台发送数据请求
+                                window.location.href="../../subArea_deleteId.action?deleId="+deleId;
+                              }
+                            }
+                        })
+                        
+                    }else{
+                        //表示没有选中删除的数据
+                        $.messager.alert("警告","请选择你要作废的分区","warning")
+                    }
 			}
 			
 			function doSearch(){
@@ -162,21 +183,6 @@
 				width : 120,
 				align : 'center'
 			}, {
-				field : 'startNum',
-				title : '起始号',
-				width : 100,
-				align : 'center'
-			}, {
-				field : 'endNum',
-				title : '终止号',
-				width : 100,
-				align : 'center'
-			} , {
-				field : 'single',
-				title : '单双号',
-				width : 100,
-				align : 'center'
-			} , {
 				field : 'assistKeyWords',
 				title : '辅助关键字',
 				width : 100,
@@ -299,34 +305,6 @@
 							<td>辅助关键字</td>
 							<td>
 								<input type="text" name="assistKeyWords" class="easyui-validatebox" required="true" />
-							</td>
-						</tr>
-						<tr>
-							<td>起始号</td>
-							<td>
-								<input type="text" name="startNum" class="easyui-validatebox" required="true" />
-							</td>
-						</tr>
-						<tr>
-							<td>终止号</td>
-							<td>
-								<input type="text" name="endNum" class="easyui-validatebox" required="true" />
-							</td>
-						</tr>
-						<tr>
-							<td>单双号</td>
-							<td>
-								<select class="easyui-combobox" name="single" style="width:150px;">
-									<option value="0">单双号</option>
-									<option value="1">单号</option>
-									<option value="2">双号</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td>位置信息</td>
-							<td>
-								<input type="text" name="position" class="easyui-validatebox" required="true" style="width:250px;" />
 							</td>
 						</tr>
 					</table>

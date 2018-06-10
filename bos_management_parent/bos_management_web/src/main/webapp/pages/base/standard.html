@@ -68,7 +68,16 @@
 				handler : function(){
 					var rows = $("#grid").datagrid("getSelections");
                     if(rows.length>=1){
-                        $.messager.alert("警告","确定删除吗？","warning");
+                        $.messager.confirm("警告","真删？",function(r){
+                        	if(r){
+                        		var arr=new Array();
+                                for(var i=0;i<rows.length;i++){
+                                    arr.push(rows[i].id);
+                                }
+                                var ids=arr.join(",");
+                                window.location.href="../../standard_del.action?ids="+ids;
+                        	}
+                        })
                     }else{
                         $.messager.alert("提示","请选择一行数据","info");
                     }
@@ -86,40 +95,25 @@
 				align : 'center'
 			}, {
 				field : 'minWeight',
-				title : '最小重量',
+				title : '最小重量/kg',
 				width : 120,
 				align : 'center'
 			}, {
 				field : 'maxWeight',
-				title : '最大重量',
+				title : '最大重量/kg',
 				width : 120,
 				align : 'center'
 			}, {
 				field : 'minLength',
-				title : '最小长度',
+				title : '最小长度/m',
 				width : 120,
 				align : 'center'
 			}, {
 				field : 'maxLength',
-				title : '最大长度',
+				title : '最大长度/m',
 				width : 120,
 				align : 'center'
-			}, {
-				field : 'operator',
-				title : '操作人',
-				width : 120,
-				align : 'center'
-			}, {
-				field : 'operatingTime',
-				title : '操作时间',
-				width : 120,
-				align : 'center'
-			}, {
-				field : 'company',
-				title : '操作单位',
-				width : 120,
-				align : 'center'
-			} ] ];
+			}] ];
 		</script>
 	</head>
 
